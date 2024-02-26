@@ -1,12 +1,16 @@
-// import * as React from "react";
-import React from 'react'
-import { Typewriter } from 'react-simple-typewriter'
+import React from 'react';
+import { Typewriter } from 'react-simple-typewriter';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
+
+import StandardImageList from './StandardImageList'; // Import the StandardImageList component
+// import { FrappeApp } from 'frappe-js-sdk';
+import FrappeJs from './frappejs';
+import DataGridDemo from './DataGridDemo';
+
 
 ChartJS.register(
   CategoryScale,
@@ -17,7 +21,6 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-
 
 const data = {
   labels: ['January', 'February', 'March', 'April', 'May', 'June'],
@@ -55,15 +58,40 @@ function LineChart() {
   return <Line data={data} options={options} />;
 }
 
-export default function BasicRating() {
+export default function App() {
   const [value, setValue] = React.useState(2);
+  const [dynamicMessage, setDynamicMessage] = React.useState("Hello from App.jsx");
+
+  const handleDone = () => {
+    console.log("Typing loop is done");
+  };
+
+  const handleType = (item) => {
+    console.log(`Current item: ${item}`);
+  };
 
   return (
-    <Box
-      sx={{
-        '& > legend': { mt: 2 },
-      }}
-    >
+    <div className='App'>
+      <p>Sultan</p>
+      
+      <p>{dynamicMessage}</p>
+      <Typewriter
+        words={['Eat', 'Sleep', 'Code', 'Repeat!']}
+        loop={5}
+        cursor
+        cursorStyle='_'
+        typeSpeed={70}
+        deleteSpeed={50}
+        delaySpeed={1000}
+        onLoopDone={handleDone}
+        onType={handleType}
+      />
+      <h2>My Fancy Chart</h2>
+      <LineChart />
+
+      {/* <StandardImageList /> */}
+      {/* <FrappeJs /> */}
+
       <Typography component="legend">Controlled</Typography>
       <Rating
         name="simple-controlled"
@@ -78,55 +106,12 @@ export default function BasicRating() {
       <Rating name="disabled" value={value} disabled />
       <Typography component="legend">No rating given</Typography>
       <Rating name="no-value" value={null} />
-    </Box>
-  );
-}
-
-export function App() {
-  const [value, setValue] = React.useState(2); 
-  const [dynamicMessage, setDynamicMessage] = React.useState("Hello from App.jsx");
-  const handleDone = () => {
-    console.log("Typing loop is done");
-  };
-
-  const handleType = (item) => {
-    console.log(`Current item: ${item}`);
-  };
-  return (
-    <div className='App'>
-      <p>Sultan</p> {/* Example usage of dynamicMessage */}
-      <p>{dynamicMessage}</p> Example usage of dynamicMessage
-      <Typewriter
-            words={['Eat', 'Sleep', 'Code', 'Repeat!']}
-            loop={5}
-            cursor
-            cursorStyle='_'
-            typeSpeed={70}
-            deleteSpeed={50}
-            delaySpeed={1000}
-            onLoopDone={handleDone}
-            onType={handleType}
-          />
-          <h2>My Fancy Chart</h2>
-          <LineChart />
-
-          <Typography component="legend">Controlled</Typography>
-          <Rating
-            name="simple-controlled"
-            value={value}
-            onChange={(event, newValue) => {
-              setValue(newValue);
-            }}
-          />
-          <Typography component="legend">Read only</Typography>
-          <Rating name="read-only" value={value} readOnly />
-          <Typography component="legend">Disabled</Typography>
-          <Rating name="disabled" value={value} disabled />
-          <Typography component="legend">No rating given</Typography>
-          <Rating name="no-value" value={null} />
-          
+      <StandardImageList />
+      <FrappeJs/>
+      <DataGridDemo />
     </div>
-    
-    
   );
 }
+
+
+

@@ -1,3 +1,4 @@
+
 app_name = "myreact2"
 app_title = "Myreact2"
 app_publisher = "ERPGUlf"
